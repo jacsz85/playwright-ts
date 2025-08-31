@@ -1,8 +1,8 @@
 import { user } from '../src/testdata/testdata';
-import { generateRandomNumber, generateRandomString } from '../utils/randomizer';
 import { LoginPage } from '../src/pages/login.page';
 import { DashboardPage } from '../src/pages/dashboard.page';
 import { expect, test } from '@playwright/test';
+import { generateRandomNumber, generateRandomString } from '../src/utils/randomizer';
 
 test.describe('Login tests', () => {
     let loginPage: LoginPage;

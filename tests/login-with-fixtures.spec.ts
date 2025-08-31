@@ -1,6 +1,6 @@
 import { test, expect } from '../src/fixtures/base';
 import { user } from '../src/testdata/testdata';
-import { generateRandomNumber, generateRandomString } from '../utils/randomizer';
+import { generateRandomNumber, generateRandomString } from '../src/utils/randomizer';
 
 test.describe('Login tests with page fixtures', () => {
 

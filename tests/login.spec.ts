@@ -8,12 +8,9 @@ test.describe('Login tests', () => {
     let loginPage: LoginPage;
     let dashboardPage: DashboardPage
 
-    test.beforeAll(async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
         dashboardPage = new DashboardPage(page);
-    });
-
-    test.beforeEach(async ({ }) => {
         await loginPage.goto();
     });
 

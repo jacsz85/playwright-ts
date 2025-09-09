@@ -54,5 +54,4 @@ test.describe('Login tests with page and login fixtures', () => {
     await expect(dashboardPage.page).toHaveURL(loginPage.loginUrl + "index.html");
   });
   
-
 });

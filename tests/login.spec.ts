@@ -4,7 +4,7 @@ import { DashboardPage } from '../src/pages/dashboard.page';
 import { expect, test } from '@playwright/test';
 import { generateRandomNumber, generateRandomString } from '../src/utils/randomizer';
 
-test.describe('Login tests', () => {
+test.describe('Authentication flow tests', () => {
     let loginPage: LoginPage;
     let dashboardPage: DashboardPage
 

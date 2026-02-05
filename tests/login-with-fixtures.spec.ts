@@ -2,7 +2,7 @@ import { test, expect } from '../src/fixtures/base';
 import { user } from '../src/testdata/testdata';
 import { generateRandomNumber, generateRandomString } from '../src/utils/randomizer';
 
-test.describe('Login tests with page fixtures', () => {
+test.describe('Authentication flow tests with page fixtures', () => {
 
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.goto();
@@ -42,7 +42,7 @@ test.describe('Login tests with page fixtures', () => {
 
 });
 
-test.describe('Login tests with page and login fixtures', () => {
+test.describe('Authentication flow tests with login and page fixtures', () => {
 
   test('Successful login', async ({ login, dashboardPage }) => {
     await expect(dashboardPage.userName).toHaveText(user.username);

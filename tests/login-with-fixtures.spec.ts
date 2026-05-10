@@ -8,14 +8,14 @@ test.describe('Authentication flow tests with page fixtures', () => {
     await loginPage.goto();
   });
 
-  test('Successful login with correct credentials', async ({ loginPage, dashboardPage }) => {
+  test('Successful login with correct credentials', async ({ loginPage, basePage }) => {
     await loginPage.enterLogin(user.loginId);
     await loginPage.enterPassword(user.password);
     await expect(loginPage.loginButton).toBeEnabled();
 
     await loginPage.clickLoginButton();
-    await dashboardPage.isReady();
-    await expect(dashboardPage.userName).toHaveText(user.username);
+    await basePage.isReady();
+    await expect(basePage.userName).toHaveText(user.username);
   });
 
   test('Unsuccessful login with too short password', async ({ loginPage }) => {
@@ -42,16 +42,17 @@ test.describe('Authentication flow tests with page fixtures', () => {
 
 });
 
-test.describe('Authentication flow tests with login and page fixtures', () => {
+test.describe('Authentication flow tests with login fixture', () => {
 
-  test('Successful login', async ({ login, dashboardPage }) => {
-    await expect(dashboardPage.userName).toHaveText(user.username);
+  test('Successful login', async ({ login, basePage }) => {
+    await expect(basePage.userName).toHaveText(user.username);
   });
 
-  test('Successful login and log out', async ({ login, loginPage, dashboardPage }) => {
-    await expect(dashboardPage.userName).toHaveText(user.username);
-    await dashboardPage.clickLogOutButton();
-    await expect(dashboardPage.page).toHaveURL(loginPage.loginUrl + "index.html");
+  test('Successful login and log out', async ({ login, loginPage, basePage }) => {
+    await expect(basePage.userName).toHaveText(user.username);
+    await basePage.clickLogOutButton();
+    await expect(loginPage.page).toHaveURL(loginPage.loginUrl + "index.html");
+    await expect(loginPage.loginForm).toBeVisible();
   });
   
 });

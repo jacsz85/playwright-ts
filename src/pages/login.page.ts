@@ -2,6 +2,7 @@ import { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
     loginUrl = 'https://demo-bank.vercel.app/';
+    loginForm: Locator;
     loginInput: Locator;
     passwordInput: Locator;
     erorrLogin: Locator;
@@ -11,6 +12,7 @@ export class LoginPage {
     tooShortPasswordErrorMessage: string = 'hasło ma min. 8 znaków';
 
     constructor(public page: Page) {
+        this.loginForm = this.page.locator('#login_form');
         this.loginInput = this.page.getByTestId('login-input');
         this.passwordInput = this.page.getByTestId('password-input');
         this.erorrLogin = this.page.getByTestId('error-login-id');

@@ -1,25 +1,42 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "./base.page";
 
-export class DashboardPage {
-    dashboardUrl = 'https://demo-bank.vercel.app/pulpit.html';
-    dashboardTitle = 'Demobank - Bankowość Internetowa - Pulpit';
-    accountInfoBar: Locator;
-    userName: Locator;
-    logOutButton: Locator;
+export class DashboardPage extends BasePage {
+    quickTransferWidgetHeader: Locator;
+    quickTransferReceiverDropdown: Locator;
+    quickTransferAmountInput: Locator;
+    quickTransferTitleInput: Locator;
+    quickTransferExecuteButton: Locator;
+    quickTransferReceiverErrorMessage: Locator;
+    quickTransferAmountErrorMessage: Locator;
+    quickTransferTitleErrorMessage: Locator;
+    quickTransferSuccessDialog: Locator;
+
+
 
     constructor(public page: Page) {
-        this.userName = this.page.getByTestId('user-name');
-        this.accountInfoBar = this.page.locator('.account-info');
-        this.logOutButton = this.page.getByTestId('logout-button');
+        super(page);
+        this.quickTransferWidgetHeader = this.page.getByRole('heading', { name: 'szybki przelew' });
+        this.quickTransferReceiverDropdown = this.page.locator('#widget_1_transfer_receiver');
+        this.quickTransferAmountInput = this.page.locator('#widget_1_transfer_amount');
+        this.quickTransferTitleInput = this.page.locator('#widget_1_transfer_title');
+        this.quickTransferExecuteButton = this.page.locator('#execute_btn');
+        this.quickTransferReceiverErrorMessage = this.page.locator('#error_widget_1_transfer_receiver');
+        this.quickTransferAmountErrorMessage = this.page.locator('#error_widget_1_transfer_amount');
+        this.quickTransferTitleErrorMessage = this.page.locator('#error_widget_1_transfer_title');
+        this.quickTransferSuccessDialog = this.page.getByRole('dialog').filter({ hasText: 'Przelew wykonany' });
     }
 
-    public async isReady() {
-        await this.page.waitForURL(this.dashboardUrl);
-        return expect(this.accountInfoBar).toBeVisible();
+    public async selectQuickTransferReceiver(option: string): Promise<void> {
+        await this.quickTransferReceiverDropdown.selectOption({ value: option });
     }
 
-    public async clickLogOutButton(): Promise<void> {
-        await this.logOutButton.click();
+    public async enterQuickTransferAmount(amount: string): Promise<void> {
+        await this.quickTransferAmountInput.fill(amount);
     }
 
+    public async enterQuickTransferTitle(title: string): Promise<void> {
+        await this.quickTransferTitleInput.fill(title);
+    }
+    
 }

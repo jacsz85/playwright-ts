@@ -1,16 +1,16 @@
 import { user } from '../src/testdata/testdata';
 import { LoginPage } from '../src/pages/login.page';
-import { DashboardPage } from '../src/pages/dashboard.page';
 import { expect, test } from '@playwright/test';
 import { generateRandomNumber, generateRandomString } from '../src/utils/randomizer';
+import { BasePage } from '../src/pages/base.page';
 
 test.describe('Authentication flow tests', () => {
     let loginPage: LoginPage;
-    let dashboardPage: DashboardPage
+    let basePage: BasePage;
 
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
-        dashboardPage = new DashboardPage(page);
+        basePage = new BasePage(page);
         await loginPage.goto();
     });
 
@@ -20,8 +20,8 @@ test.describe('Authentication flow tests', () => {
         await expect(loginPage.loginButton).toBeEnabled();
 
         await loginPage.clickLoginButton();
-        await dashboardPage.isReady();
-        await expect(dashboardPage.userName).toHaveText(user.username);
+        await basePage.isReady();
+        await expect(basePage.userName).toHaveText(user.username);
     });
 
     test('Unsuccessful login with too short password', async ({ }) => {

@@ -18,7 +18,7 @@ test.describe.serial('Quick transfer widget tests', () => {
         await expect(dashboardPage.quickTransferTitleErrorMessage).toContainText('pole wymagane');
     });
 
-        test ('Send quick transfer with only receiver selected', async ({ login, dashboardPage }) => {
+        test ('Send quick transfer with all data entered', async ({ login, dashboardPage }) => {
         var transferAmount = generateRandomNumber(2);
         var transferTitle = generateRandomString(10);
 

@@ -3,33 +3,47 @@ import { generateRandomNumber, generateRandomString, generateValueInRange } from
 
 test.describe.serial('Quick transfer widget tests', () => {
 
-    test('Quick transfer widget is displayed on dashboard', async ({ login, dashboardPage }) => {
-        await expect(dashboardPage.quickTransferWidgetHeader).toBeVisible();
-        await expect(dashboardPage.quickTransferReceiverDropdown).toBeVisible();
-        await expect(dashboardPage.quickTransferAmountInput).toBeVisible();
-        await expect(dashboardPage.quickTransferTitleInput).toBeVisible();
-        await expect(dashboardPage.quickTransferExecuteButton).toBeVisible();
-    });
-
     test('Send quick transfer with no data entered', async ({ login, dashboardPage }) => {
+        await expect(dashboardPage.quickTransferWidgetHeader).toBeVisible();
         await dashboardPage.quickTransferExecuteButton.click();
         await expect(dashboardPage.quickTransferReceiverErrorMessage).toContainText('pole wymagane');
         await expect(dashboardPage.quickTransferAmountErrorMessage).toContainText('pole wymagane');
         await expect(dashboardPage.quickTransferTitleErrorMessage).toContainText('pole wymagane');
     });
 
-        test ('Send quick transfer with all data entered', async ({ login, dashboardPage }) => {
+    test('Send quick transfer with all data entered', async ({ login, dashboardPage }) => {
+        var randomReceiverIndex = generateValueInRange(1, 3);
         var transferAmount = generateRandomNumber(2);
         var transferTitle = generateRandomString(10);
 
-        await dashboardPage.selectQuickTransferReceiver(generateValueInRange(1, 3));
-        await dashboardPage.enterQuickTransferAmount(transferAmount);
-        await dashboardPage.enterQuickTransferTitle(transferTitle);
-        await dashboardPage.quickTransferExecuteButton.click();
+        await dashboardPage.sendQuickTransfer(randomReceiverIndex, transferAmount, transferTitle);
 
-        await expect(dashboardPage.quickTransferSuccessDialog).toBeVisible();
-        await expect(dashboardPage.quickTransferSuccessDialog).toContainText(transferAmount);
-        await expect(dashboardPage.quickTransferSuccessDialog).toContainText(transferTitle);
+        await expect(dashboardPage.successDialog).toBeVisible();
+        await expect(dashboardPage.successDialog).toContainText(transferAmount);
+        await expect(dashboardPage.successDialog).toContainText(transferTitle);
+    });
+
+});
+
+test.describe.serial('Top up widget tests', () => {
+
+    test('Top up with no data entered', async ({ login, dashboardPage }) => {
+        await expect(dashboardPage.topUpWidgetHeader).toBeVisible();
+        await dashboardPage.topUpWidgetExecuteButton.click();
+        await expect(dashboardPage.topUpWidgetReceiverErrorMessage).toContainText('pole wymagane');
+        await expect(dashboardPage.topUpWidgetAmountErrorMessage).toContainText('pole wymagane');
+        await expect(dashboardPage.topUpWidgetAgreementErrorMessage).toContainText('pole wymagane');
+    });
+
+    test('Top up with all data entered', async ({ login, dashboardPage }) => {
+        var randomReceiverIndex = generateValueInRange(1, 3);
+        var topUpAmount = generateRandomNumber(2);
+
+        await dashboardPage.sendTopUp(randomReceiverIndex, topUpAmount);
+        
+        await expect(dashboardPage.successDialog).toBeVisible();   
+        await expect(dashboardPage.successDialog).toContainText('Doładowanie wykonane');
+        await expect(dashboardPage.successDialog).toContainText(topUpAmount);
     });
 
 });

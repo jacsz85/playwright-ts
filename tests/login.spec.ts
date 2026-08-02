@@ -1,20 +1,14 @@
 import { user } from '../src/testdata/testdata';
-import { LoginPage } from '../src/pages/login.page';
-import { expect, test } from '@playwright/test';
 import { generateRandomNumber, generateRandomString } from '../src/utils/randomizer';
-import { BasePage } from '../src/pages/base.page';
+import { expect, test } from '../src/fixtures/base';
 
 test.describe('Authentication flow tests', () => {
-    let loginPage: LoginPage;
-    let basePage: BasePage;
 
-    test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page);
-        basePage = new BasePage(page);
+    test.beforeEach(async ({ loginPage }) => {
         await loginPage.goto();
     });
 
-    test('Successful login with correct credentials', async ({ }) => {
+    test('Successful login with correct credentials', async ({ loginPage, basePage }) => {
         await loginPage.enterLogin(user.loginId);
         await loginPage.enterPassword(user.password);
         await expect(loginPage.loginButton).toBeEnabled();
@@ -22,9 +16,13 @@ test.describe('Authentication flow tests', () => {
         await loginPage.clickLoginButton();
         await basePage.isReady();
         await expect(basePage.userName).toHaveText(user.username);
+        
+        await basePage.clickLogOutButton();
+        await expect(loginPage.page).toHaveURL(loginPage.loginUrl + "index.html");
+        await expect(loginPage.loginForm).toBeVisible();
     });
 
-    test('Unsuccessful login with too short password', async ({ }) => {
+    test('Unsuccessful login with too short password', async ({ loginPage}) => {
         await loginPage.enterLogin(user.loginId);
 
         const shortPassword = generateRandomNumber(7);
@@ -36,7 +34,7 @@ test.describe('Authentication flow tests', () => {
         await expect(loginPage.loginButton).toBeDisabled();
     });
 
-    test('Unsuccessful login with too short login', async ({ }) => {
+    test('Unsuccessful login with too short login', async ({ loginPage }) => {
         const shortLogin = generateRandomString(7);
         console.log(`Generated short login: ${shortLogin}`);
         await loginPage.enterLogin(shortLogin);

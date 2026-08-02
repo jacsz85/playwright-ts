@@ -1,5 +1,6 @@
 import { Locator, Page } from "playwright";
 import { expect } from "@playwright/test";
+import { PaymentsPage } from "./payments.page";
 
 export class BasePage {
     homepageUrl = 'https://demo-bank.vercel.app/pulpit.html';
@@ -34,8 +35,10 @@ export class BasePage {
         await expect(this.successDialog).not.toBeVisible();
     }
 
-    public async goGoToPayments(): Promise<void> {
+    public async goGoToPayments({paymentsPage}: {paymentsPage: PaymentsPage}): Promise<void> {
         await this.payments.click();
+        await expect(paymentsPage.pageHeader).toBeVisible();
+        await expect(paymentsPage.paymentForm).toBeVisible();
     }
 
 }

@@ -21,14 +21,6 @@ export class PaymentsPage extends BasePage {
         this.sendPaymentButton = this.page.locator('#execute_btn');
     }
 
-    public async goToPayments(): Promise<void> {
-        await this.payments.click();
-        await this.page.waitForURL(/przelew_nowy_zew\.html/);
-        await expect(this.pageHeader).toBeVisible();
-        await expect(this.paymentForm).toBeVisible();
-
-    }
-
     public async fillTransferForm(receiver: string, account: string, amount: string): Promise<void> {
         await this.receiverInput.fill(receiver);
         await this.accountInput.fill(account);

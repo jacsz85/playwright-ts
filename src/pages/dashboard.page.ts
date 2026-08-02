@@ -10,7 +10,6 @@ export class DashboardPage extends BasePage {
     quickTransferReceiverErrorMessage: Locator;
     quickTransferAmountErrorMessage: Locator;
     quickTransferTitleErrorMessage: Locator;
-    successDialog: Locator;
 
     topUpWidgetHeader: Locator;
     topUpWidgetReceiverDropdown: Locator;
@@ -31,7 +30,6 @@ export class DashboardPage extends BasePage {
         this.quickTransferReceiverErrorMessage = this.page.locator('#error_widget_1_transfer_receiver');
         this.quickTransferAmountErrorMessage = this.page.locator('#error_widget_1_transfer_amount');
         this.quickTransferTitleErrorMessage = this.page.locator('#error_widget_1_transfer_title');
-        this.successDialog = this.page.getByRole('dialog');
 
         this.topUpWidgetHeader = this.page.getByRole('heading', { name: 'doładowanie telefonu' });
         this.topUpWidgetReceiverDropdown = this.page.locator('#widget_1_topup_receiver');

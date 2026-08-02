@@ -21,6 +21,8 @@ test.describe.serial('Quick transfer widget tests', () => {
         await expect(dashboardPage.successDialog).toBeVisible();
         await expect(dashboardPage.successDialog).toContainText(transferAmount);
         await expect(dashboardPage.successDialog).toContainText(transferTitle);
+
+        await dashboardPage.clickOkButtonOnSuccessDialog();
     });
 
 });
@@ -40,10 +42,12 @@ test.describe.serial('Top up widget tests', () => {
         var topUpAmount = generateRandomNumber(2);
 
         await dashboardPage.sendTopUp(randomReceiverIndex, topUpAmount);
-        
+
         await expect(dashboardPage.successDialog).toBeVisible();   
         await expect(dashboardPage.successDialog).toContainText('Doładowanie wykonane');
         await expect(dashboardPage.successDialog).toContainText(topUpAmount);
+
+        await dashboardPage.clickOkButtonOnSuccessDialog();
     });
 
 });

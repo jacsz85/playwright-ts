@@ -7,13 +7,17 @@ export class BasePage {
     userName: Locator;
     logOutButton: Locator
     accountInfoBar: Locator;
-    privateAccountsButton: Locator;
+    payments: Locator;
+    successDialog: Locator;
+    dialogOkButton: Locator;
 
     constructor(public page: Page) {
         this.userName = this.page.getByTestId('user-name');
         this.logOutButton = this.page.getByTestId('logout-button');
         this.accountInfoBar = this.page.locator('.account-info');
-        this.privateAccountsButton = this.page.locator('#privaccounts_btn');
+        this.payments = this.page.locator('#payments_btn');
+        this.successDialog = this.page.getByRole('dialog');
+        this.dialogOkButton = this.page.getByRole('button', { name: 'Ok' });
     }
 
     public async isReady() {
@@ -25,8 +29,13 @@ export class BasePage {
         await this.logOutButton.click();
     }
 
-    public async goGoToPrivateAccounts(): Promise<void> {
-        await this.privateAccountsButton.click();
+    public async clickOkButtonOnSuccessDialog(): Promise<void> {
+        await this.dialogOkButton.click();
+        await expect(this.successDialog).not.toBeVisible();
+    }
+
+    public async goGoToPayments(): Promise<void> {
+        await this.payments.click();
     }
 
 }
